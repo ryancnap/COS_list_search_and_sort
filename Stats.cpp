@@ -17,16 +17,18 @@ int Stats::minimum()
 	if (counter == 0)
 		return 0;
 
+	sort();
 	return numberList[0];
 }
 
 
 // Returns highest value of dataset. 
-int Stats::maximum() const
+int Stats::maximum()
 {
 	// Fail if dataset is empty. 
 	if (counter == 0)
 		return 0;
+	sort();
 	return numberList[counter - 1];
 }
 
@@ -46,14 +48,14 @@ int Stats::sum()
 
 
 // Returns mean of dataset. 
-int Stats::mean()
+double Stats::mean()
 {
 	// Fail if dataset is empty.
 	if (counter == 0)
 		return 0;
 
-	int sum = 0;
-	int average = 0;
+	double sum = 0;
+	double average = 0;
 	for (int i = 0; i < counter; i++)
 		sum += numberList[i];
 	average = sum / counter;
@@ -69,11 +71,14 @@ int Stats::median()
 		return 0; 
 
 	// If counter is odd, we can return middle.
+	sort();
 	if (counter % 2 != 0)
 		return numberList[counter / 2];
 
 	int midRight = numberList[counter / 2];
-	int midLeft = numberList[midRight - 2]; 
+	int midLeft = numberList[midRight - 2];
+	static_cast<double>(midLeft);
+	static_cast<double>(midRight);
 	return (midRight + midLeft) / 2;
 }
 
@@ -85,19 +90,38 @@ void Stats::display()
 		std::cout << "\n\t(!) Dataset is empty.";
 	else
 	{
-		// TODO: sort() data here first
+		sort();
 		cout << "\n\n[Current dataset]";
 		for (int i = 0; i < counter; i++)
-			cout << "\n" << "Current: " << current <<" / Counter: " << counter << " / I-value: " << i << " / Value: " << numberList[i];
+			cout << "\n" << numberList[i];
 	}
 		
 }
 
 
-// Sort implementation.
+// Sort implementation - swaps two indices in dataset. 
+void Stats::swap(int index1, int index2)
+{
+	int temp = numberList[index1];
+	numberList[index1] = numberList[index2];
+	numberList[index2] = temp;
+}
+// Sort implementation - takes a dataset index from sort() 
+void Stats::insert(int index)
+{
+	if (index < 1)
+		return;
+	if (numberList[index] > numberList[index - 1])
+		return;
+	swap(index, (index - 1));
+	insert(index - 1);
+}
+
 void Stats::sort()
 {
-	// TODO: radix sort for integers, or quicksort
+	// Insertion sort. 
+	for (int i = 1; i < counter; i++)
+		insert(i); 
 }
 
 

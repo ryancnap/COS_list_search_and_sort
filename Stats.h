@@ -7,6 +7,9 @@ class Stats
 		int current;
 		int counter;
 
+		// Sort and search implementation. 
+		void swap(int i1, int i2); 
+		void insert(int index);
 		void sort();
 		int binarySearch(int num, int min, int max);
 
@@ -16,9 +19,9 @@ class Stats
 
 		// Generate information about collection.
 		int minimum();
-		int maximum() const;
+		int maximum();
 		int sum();
-		int mean();
+		double mean();
 		int median();
 		void display();
 		

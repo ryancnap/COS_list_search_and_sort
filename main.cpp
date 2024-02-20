@@ -64,15 +64,6 @@ int main()
 			cout << "\n- Median: " << numberList.median();
 			break;
 
-		case 6:
-			cout << "Enter number to search: ";
-			cin >> num;
-			num = validateInput(num);
-			found = numberList.search(num);
-			if (found != -1)
-				cout << "\nFound " << num << " at index " << found << ".";
-			break;
-
 		default:
 			cout << "\n\t(!) Invalid input, please enter a numerical choice from the menu";
 			break; 
