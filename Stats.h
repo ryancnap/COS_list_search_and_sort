@@ -22,7 +22,7 @@ class Stats
 		int maximum();
 		int sum();
 		double mean();
-		int median();
+		double median();
 		void display();
 		
 		// Manipulate collection, unsanitary class methods.

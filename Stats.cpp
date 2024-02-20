@@ -1,5 +1,3 @@
-//STILL NEED TO WRITE: SORT()
-
 #include "Stats.h"
 
 // Constructor.
@@ -64,11 +62,11 @@ double Stats::mean()
 
 
 // Returns median of dataset. 
-int Stats::median()
+double Stats::median()
 {
 	// Fail if dataset is empty.
 	if (counter == 0)
-		return 0; 
+		return 0;
 
 	// If counter is odd, we can return middle.
 	sort();
@@ -76,10 +74,11 @@ int Stats::median()
 		return numberList[counter / 2];
 
 	int midRight = numberList[counter / 2];
-	int midLeft = numberList[midRight - 2];
+	int midLeft = numberList[(counter / 2) - 1];
+
 	static_cast<double>(midLeft);
 	static_cast<double>(midRight);
-	return (midRight + midLeft) / 2;
+	return ((static_cast<double>(midLeft) + static_cast<double>(midRight)) / 2.0);
 }
 
 
@@ -106,6 +105,7 @@ void Stats::swap(int index1, int index2)
 	numberList[index1] = numberList[index2];
 	numberList[index2] = temp;
 }
+
 // Sort implementation - takes a dataset index from sort() 
 void Stats::insert(int index)
 {
@@ -180,16 +180,21 @@ bool Stats::removeNumber(int num)
 		return false; 
 	}
 
-	int location = 0;
-	for (int i = 0; i < counter; i++)
-		if (numberList[i] == num)
-			location = i;
+	int location = search(num);
+	if (location != -1)
+	{
+		cout << "(Removing " << num << " from dataset)";
+		for (location; location < counter - 1; location++)
+			numberList[location] = numberList[location + 1];
+		counter--;
+		return true;
+	}
 
-	cout << "(Removing " << num << " from dataset)";
-	for (location; location < counter - 1; location++)
-		numberList[location] = numberList[location + 1];
-	counter--;
-	return true;
+	else
+	{
+		cout << "\n\t(!) " << num << " was not found in the dataset.";
+		return false;
+	}
 }
 
 // Resets all data. 
